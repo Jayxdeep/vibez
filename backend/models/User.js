@@ -1,22 +1,28 @@
 import mongoose from "mongoose";
-// import { use } from "react";
-const userSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      trim: true,
     },
-    email:{
-        type:String,
-        unique:true,
-        required:true
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email is required"],
+      lowercase: true,
+      trim: true,
     },
     password: {
-        type:String,
-        required:true
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters long"],
     },
-    createdAT:{
-        type:Date,
-        default:Date.now
-    }
-});
-export default mongoose.model("User",userSchema);
+  },
+  {
+    timestamps: true, // ✅ Automatically adds createdAt and updatedAt fields
+  }
+);
+
+export default mongoose.model("User", userSchema);

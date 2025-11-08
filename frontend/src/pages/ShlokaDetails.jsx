@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar"; // ✅ Importing your Navbar component
 
 const ShlokaDetails = () => {
   const { chapterId, verseId } = useParams();
@@ -47,8 +48,11 @@ const ShlokaDetails = () => {
   }
 
   return (
-    <div className="bg-black min-h-screen text-white p-6 flex flex-col items-center">
-      <div className="max-w-4xl w-full">
+    <div className="bg-black min-h-screen text-white flex flex-col items-center p-6">
+      {/* ✅ Navbar at top */}
+      <Navbar />
+
+      <div className="max-w-4xl w-full mt-24">
         {/* 🕉️ Title */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-semibold text-[#c2995a]">
@@ -158,7 +162,7 @@ const ShlokaDetails = () => {
           </div>
         )}
 
-        {/* Navigation Buttons */}
+        {/* 🔹 Navigation Buttons */}
         <div className="flex justify-between mt-10">
           <button
             onClick={handlePrev}
@@ -187,5 +191,6 @@ const ShlokaDetails = () => {
     </div>
   );
 };
+
 
 export default ShlokaDetails;
