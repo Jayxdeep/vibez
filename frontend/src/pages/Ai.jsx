@@ -61,7 +61,7 @@ const Ai = () => {
   return (
     <div
       className="relative min-h-screen flex flex-col bg-linear-to-b from-black via-[#0b0b0b] to-[#1a1308] text-white overflow-hidden"
-      style={{ fontFamily: "Outfit, sans-serif" }}
+      style={{ fontFamily: "var(--font-english)" }}
     >
       {/* ✨ Navbar */}
       <Navbar />
