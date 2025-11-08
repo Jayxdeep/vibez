@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar"; // ✅ Importing your Navbar component
 
 const ShlokaDetails = () => {
   const { chapterId, verseId } = useParams();
@@ -9,16 +8,21 @@ const ShlokaDetails = () => {
   const [loading, setLoading] = useState(true);
 
   const currentVerse = Number(verseId) || 1;
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`https://vedicscriptures.github.io/slok/${chapterId}/${currentVerse}/`);
-        const json = await res.json();
-        console.clear();
-        console.log("🕉️ Verse Data:", json);
-        setData(json);
+        const res = await getShloka(chapterId, currentVerse);
+        setData(res.data);
+
+        if (token) {
+          await updateProgress(
+            { chapter: Number(chapterId), shlok: currentVerse },
+            token
+          );
+        }
       } catch (err) {
         console.error("Error fetching data:", err);
       } finally {
@@ -26,10 +30,14 @@ const ShlokaDetails = () => {
       }
     };
     fetchData();
-  }, [chapterId, currentVerse]);
+  }, [chapterId, currentVerse, token]);
 
-  const handleNext = () => navigate(`/chapter/${chapterId}/shlokas/${currentVerse + 1}`);
-  const handlePrev = () => currentVerse > 1 && navigate(`/chapter/${chapterId}/shlokas/${currentVerse - 1}`);
+  const handleNext = () =>
+    navigate(`/chapter/${chapterId}/shlokas/${currentVerse + 1}`);
+
+  const handlePrev = () =>
+    currentVerse > 1 &&
+    navigate(`/chapter/${chapterId}/shlokas/${currentVerse - 1}`);
 
   if (loading) {
     return (
@@ -48,11 +56,8 @@ const ShlokaDetails = () => {
   }
 
   return (
-    <div className="bg-black min-h-screen text-white flex flex-col items-center p-6">
-      {/* ✅ Navbar at top */}
-      <Navbar />
-
-      <div className="max-w-4xl w-full mt-24">
+    <div className="bg-black min-h-screen text-white p-6 flex flex-col items-center">
+      <div className="max-w-4xl w-full">
         {/* 🕉️ Title */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-semibold text-[#c2995a]">
@@ -61,7 +66,6 @@ const ShlokaDetails = () => {
           <p className="text-sm text-gray-400 mt-1">{data._id}</p>
         </div>
 
-        {/* 📜 Sanskrit Verse */}
         <div className="text-center mb-6">
           <p
             className="text-2xl leading-relaxed font-semibold"
@@ -75,10 +79,10 @@ const ShlokaDetails = () => {
           </p>
         </div>
 
-        {/* 🪷 Transliteration */}
-        <p className="text-center text-gray-400 italic mb-8">{data.transliteration}</p>
+        <p className="text-center text-gray-400 italic mb-8">
+          {data.transliteration}
+        </p>
 
-        {/* 🌸 Swami Tejomayananda (Hindi) */}
         {data.tej && (
           <div className="bg-[#0d0d0d] p-5 mb-6 rounded-xl border border-[#c2995a]/30">
             <h2 className="text-[#c2995a] text-lg font-semibold mb-2">
@@ -88,81 +92,99 @@ const ShlokaDetails = () => {
           </div>
         )}
 
-        {/* 🌸 Swami Sivananda (English) */}
         {data.siva && (
           <div className="bg-[#0d0d0d] p-5 mb-6 rounded-xl border border-[#c2995a]/30">
             <h2 className="text-[#c2995a] text-lg font-semibold mb-2">
               Swami Sivananda — English Translation
             </h2>
-            <p className="text-gray-200 mb-2 whitespace-pre-line">{data.siva.et}</p>
+            <p className="text-gray-200 mb-2 whitespace-pre-line">
+              {data.siva.et}
+            </p>
             {data.siva.ec && (
-              <p className="text-gray-400 text-sm whitespace-pre-line">{data.siva.ec}</p>
+              <p className="text-gray-400 text-sm whitespace-pre-line">
+                {data.siva.ec}
+              </p>
             )}
           </div>
         )}
 
-        {/* 🌸 Prabhupada */}
         {data.prabhu && (
           <div className="bg-[#0d0d0d] p-5 mb-6 rounded-xl border border-[#c2995a]/30">
             <h2 className="text-[#c2995a] text-lg font-semibold mb-2">
               A.C. Bhaktivedanta Swami Prabhupada — English Translation
             </h2>
-            <p className="text-gray-200 mb-2 whitespace-pre-line">{data.prabhu.et}</p>
+            <p className="text-gray-200 mb-2 whitespace-pre-line">
+              {data.prabhu.et}
+            </p>
             {data.prabhu.ec && (
-              <p className="text-gray-400 text-sm whitespace-pre-line">{data.prabhu.ec}</p>
+              <p className="text-gray-400 text-sm whitespace-pre-line">
+                {data.prabhu.ec}
+              </p>
             )}
           </div>
         )}
 
-        {/* 🌸 Chinmayananda (Hindi Commentary) */}
         {data.chinmay && (
           <div className="bg-[#0d0d0d] p-5 mb-6 rounded-xl border border-[#c2995a]/30">
             <h2 className="text-[#c2995a] text-lg font-semibold mb-2">
               Swami Chinmayananda — हिन्दी व्याख्या
             </h2>
-            <p className="text-gray-200 whitespace-pre-line">{data.chinmay.hc}</p>
+            <p className="text-gray-200 whitespace-pre-line">
+              {data.chinmay.hc}
+            </p>
           </div>
         )}
 
-        {/* 🌸 Ramsukhdas (Detailed Hindi Explanation) */}
         {data.rams && (
           <div className="bg-[#0d0d0d] p-5 mb-6 rounded-xl border border-[#c2995a]/30">
             <h2 className="text-[#c2995a] text-lg font-semibold mb-2">
               Swami Ramsukhdas — हिन्दी अर्थ और व्याख्या
             </h2>
-            {data.rams.ht && <p className="text-gray-200 mb-3">{data.rams.ht}</p>}
+            {data.rams.ht && (
+              <p className="text-gray-200 mb-3">{data.rams.ht}</p>
+            )}
             {data.rams.hc && (
-              <p className="text-gray-400 text-sm whitespace-pre-line">{data.rams.hc}</p>
+              <p className="text-gray-400 text-sm whitespace-pre-line">
+                {data.rams.hc}
+              </p>
             )}
           </div>
         )}
 
-        {/* 🌸 Other Commentaries */}
         {data.adi?.et && (
           <div className="bg-[#0d0d0d] p-5 mb-6 rounded-xl border border-[#c2995a]/30">
-            <h2 className="text-[#c2995a] text-lg font-semibold mb-2">Swami Adidevananda</h2>
-            <p className="text-gray-200 whitespace-pre-line">{data.adi.et}</p>
+            <h2 className="text-[#c2995a] text-lg font-semibold mb-2">
+              Swami Adidevananda
+            </h2>
+            <p className="text-gray-200 whitespace-pre-line">
+              {data.adi.et}
+            </p>
           </div>
         )}
 
         {data.gambir?.et && (
           <div className="bg-[#0d0d0d] p-5 mb-6 rounded-xl border border-[#c2995a]/30">
-            <h2 className="text-[#c2995a] text-lg font-semibold mb-2">Swami Gambirananda</h2>
-            <p className="text-gray-200 whitespace-pre-line">{data.gambir.et}</p>
+            <h2 className="text-[#c2995a] text-lg font-semibold mb-2">
+              Swami Gambirananda
+            </h2>
+            <p className="text-gray-200 whitespace-pre-line">
+              {data.gambir.et}
+            </p>
           </div>
         )}
 
-        {/* 🌸 Dr. S. Sankaranarayan */}
         {data.san?.et && (
           <div className="bg-[#0d0d0d] p-5 mb-6 rounded-xl border border-[#c2995a]/30">
             <h2 className="text-[#c2995a] text-lg font-semibold mb-2">
               Dr. S. Sankaranarayan — English Translation
             </h2>
-            <p className="text-gray-200 whitespace-pre-line">{data.san.et}</p>
+            <p className="text-gray-200 whitespace-pre-line">
+              {data.san.et}
+            </p>
           </div>
         )}
 
-        {/* 🔹 Navigation Buttons */}
+        {/* Navigation Buttons */}
         <div className="flex justify-between mt-10">
           <button
             onClick={handlePrev}
@@ -185,7 +207,7 @@ const ShlokaDetails = () => {
         </div>
 
         <p className="text-center text-xs text-gray-500 mt-8">
-          Data Source: vedicscriptures.github.io
+          Data Source: MindMate Backend
         </p>
       </div>
     </div>

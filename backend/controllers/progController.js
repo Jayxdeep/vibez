@@ -30,7 +30,7 @@ export const getProgress = async (req, res) => {
     const progess = await userProg.findOne({ userId });
 
     if (!progess) {
-      return res.json({ message: "No progress found" });
+      return res.json({chapter: null, shlok: null });
     }
 
     res.json({

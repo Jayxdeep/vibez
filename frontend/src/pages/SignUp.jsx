@@ -1,42 +1,9 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import login from "../assets/login.jpg";
+import React from "react";
+import { Link } from "react-router-dom";
+import login from "../assets/login.jpg"; // ✅ Using same background as Intro
 import { motion } from "framer-motion";
-import axios from "axios";
 
 const Signup = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    setLoading(true);
-
-    try {
-      const res = await axios.post("http://localhost:3000/api/auth/signup", {
-        name,
-        email,
-        password,
-      });
-
-      console.log("✅ Signup successful:", res.data);
-      setSuccess("Signup successful! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 2000);
-    } catch (err) {
-      console.error("❌ Signup failed:", err.response?.data || err.message);
-      setError(err.response?.data?.message || "Something went wrong. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div
       className="relative min-h-screen flex items-center justify-center bg-cover bg-center text-center overflow-hidden"
@@ -44,12 +11,12 @@ const Signup = () => {
         backgroundImage: `url(${login})`,
       }}
     >
-      {/* ✨ Golden Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/60"></div>
+      {/* ✨ Soft golden overlay */}
+      <div className="absolute inset-0 bg-linear-to-b from-black/45 via-black/30 to-black/60"></div>
 
-      {/* 🌿 Signup Form */}
+      {/* 🌿 Signup Form Container */}
       <div className="relative z-10 bg-white/10 backdrop-blur-md p-10 rounded-2xl shadow-lg max-w-md w-full mx-6 border border-[#c2995a]/40">
-        {/* Title */}
+
         <h1
           className="sanskrit-text text-3xl md:text-4xl font-semibold text-white mb-3"
           style={{
@@ -59,53 +26,43 @@ const Signup = () => {
         >
           दिव्यश्लोक
         </h1>
+
         <h2
           className="english-text text-xl font-semibold mb-6"
           style={{
-            color: "#f9f6f0",
-            textShadow:
-              "0 0 20px rgba(194,153,90,0.6), 0 0 40px rgba(194,153,90,0.3)",
+            color: "var(--color-gold)",
           }}
         >
           Join The Divine Verse
         </h2>
 
-        {/* 📝 Form */}
-        <form className="flex flex-col gap-5" onSubmit={handleSignup}>
+        {/* Form */}
+        <form className="flex flex-col gap-5">
           {/* Name Input */}
           <motion.input
             type="text"
             placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="px-4 py-3 rounded-lg bg-white/85 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#c2995a]"
+            className="px-4 py-3 rounded-lg bg-white/85 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-(--color-gold)"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           />
 
-          {/* Email Input */}
+          {/* ✅ controlled input: email */}
           <motion.input
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="px-4 py-3 rounded-lg bg-white/85 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#c2995a]"
+            className="px-4 py-3 rounded-lg bg-white/85 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-(--color-gold)"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           />
 
-          {/* Password Input */}
+          {/* ✅ controlled input: password */}
           <motion.input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="px-4 py-3 rounded-lg bg-white/85 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#c2995a]"
+            className="px-4 py-3 rounded-lg bg-white/85 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-(--color-gold)"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -135,7 +92,7 @@ const Signup = () => {
             </motion.p>
           )}
 
-          {/* Signup Button */}
+          {/* ✅ Button executes submit handler */}
           <motion.button
             type="submit"
             disabled={loading}
@@ -152,18 +109,6 @@ const Signup = () => {
           </motion.button>
         </form>
 
-        {/* Divider */}
-        <motion.div
-          className="flex items-center my-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-        >
-          <div className="grow h-px bg-white/30"></div>
-          <div className="grow h-px bg-white/30"></div>
-        </motion.div>
-
-        {/* Bottom Links */}
         <motion.p
           className="mt-6 text-gray-300 text-sm font-[Outfit]"
           initial={{ opacity: 0 }}
@@ -178,10 +123,11 @@ const Signup = () => {
             Login
           </Link>
         </motion.p>
+
       </div>
 
       {/* 🌕 Bottom Glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#c89d5c33] to-transparent blur-2xl pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-linear-to-t from-[#c89d5c33] to-transparent blur-2xl pointer-events-none"></div>
     </div>
   );
 };

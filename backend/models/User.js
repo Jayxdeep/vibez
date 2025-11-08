@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+<<<<<<< Updated upstream
 
 const userSchema = new mongoose.Schema(
   {
@@ -6,6 +7,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Name is required"],
       trim: true,
+=======
+const userSchema=new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+>>>>>>> Stashed changes
     },
     email: {
       type: String,
