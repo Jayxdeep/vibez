@@ -15,12 +15,16 @@ const app = express();
 // 🛡️ Middleware
 app.use(cors());
 app.use(express.json());
+import krishnaRoutes from "./routes/krishnaRoutes.js";
 
 // 🧭 API Routes
 app.use("/api/auth", authRoutes);         // Authentication (Signup / Login)
 app.use("/api/chapters", chapterRoutes);  // Chapters list / details
 app.use("/api/shlok", shlokRoutes);       // Shloka details per chapter
-app.use("/api/progress", progRoutes);     // User progress tracking
+app.use("/api/progress", progRoutes); 
+
+app.use("/api/krishna", krishnaRoutes);
+    // User progress tracking
 
 // 🩵 Root test route
 app.get("/", (_req, res) => {
