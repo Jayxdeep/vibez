@@ -1,9 +1,9 @@
 import dotenv from 'dotenv'
 dotenv.config();
 import cors from 'cors'
-// import axios from 'axios'
+import axios from 'axios'
 import app from "./app.js";
-import connectDB from './config/db'
+import connectDB from './config/db.js'
 connectDB();
 const PORT=process.env.PORT|| 3000;
 const startServer=async()=>{
