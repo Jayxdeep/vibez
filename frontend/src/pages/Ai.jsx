@@ -35,7 +35,6 @@ const Ai = () => {
       });
 
       const data = await res.json();
-
       const krishnaMessage = {
         role: "krishna",
         text:
@@ -43,7 +42,6 @@ const Ai = () => {
           "My dear seeker, silence too carries wisdom. Try asking again.",
         reference: data.reference || "—",
       };
-
       setMessages((prev) => [...prev, krishnaMessage]);
     } catch (err) {
       console.error("❌ Error talking to Krishna:", err);
@@ -51,8 +49,7 @@ const Ai = () => {
         ...prev,
         {
           role: "krishna",
-          text:
-            "The divine connection seems faint, Arjuna. Try again after a moment of calm.",
+          text: "The divine connection seems faint, Arjuna. Try again after a moment of calm.",
           reference: "—",
         },
       ]);
@@ -63,7 +60,7 @@ const Ai = () => {
 
   return (
     <div
-      className="relative min-h-screen flex flex-col bg-gradient-to-b from-black via-[#0b0b0b] to-[#1a1308] text-white overflow-hidden"
+      className="relative min-h-screen flex flex-col bg-linear-to-b from-black via-[#0b0b0b] to-[#1a1308] text-white overflow-hidden"
       style={{ fontFamily: "Outfit, sans-serif" }}
     >
       {/* ✨ Navbar */}
@@ -139,7 +136,6 @@ const Ai = () => {
               <span>🕉️ Krishna is contemplating your question...</span>
             </motion.div>
           )}
-
           <div ref={messagesEndRef} />
         </div>
 
@@ -153,7 +149,7 @@ const Ai = () => {
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask about karma, dharma, or any verse (e.g., Explain 2.47)..."
-            className="flex-grow px-4 py-3 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+            className="grow px-4 py-3 bg-transparent text-white placeholder-gray-400 focus:outline-none"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) handleAskKrishna(e);
             }}

@@ -31,7 +31,7 @@ const Home = () => {
               "0 0 25px rgba(194,153,90,0.9), 0 0 40px rgba(194,153,90,0.4), 0 0 60px rgba(194,153,90,0.2)",
           }}
         >
-          दिव्यश्लोक — गीता ज्ञानस्य पथः
+          दिव्यश्लोक - गीता ज्ञानस्य पथः
         </motion.h1>
 
         {/* English Heading */}
@@ -55,7 +55,7 @@ const Home = () => {
           >
             DivineVerse
           </span>{" "}
-          — where timeless verses meet intelligent understanding.
+          - where timeless verses meet intelligent understanding.
         </motion.h2>
 
         {/* 🌸 Description Section */}

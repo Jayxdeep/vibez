@@ -40,7 +40,7 @@ const Login = () => {
       }}
     >
       {/* ✨ Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/65"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-black/45 via-black/35 to-black/65"></div>
 
       {/* 🌿 Login Form */}
       <div className="relative z-10 bg-white/10 backdrop-blur-md p-10 rounded-2xl shadow-lg max-w-md w-full mx-6 border border-[#c2995a]/40">
@@ -142,7 +142,7 @@ const Login = () => {
         </motion.p>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#be945533] to-transparent blur-2xl pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-linear-to-t from-[#be945533] to-transparent blur-2xl pointer-events-none"></div>
     </div>
   );
 };

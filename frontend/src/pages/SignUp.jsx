@@ -45,7 +45,7 @@ const Signup = () => {
       }}
     >
       {/* ✨ Golden Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/60"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-black/45 via-black/30 to-black/60"></div>
 
       {/* 🌿 Signup Form */}
       <div className="relative z-10 bg-white/10 backdrop-blur-md p-10 rounded-2xl shadow-lg max-w-md w-full mx-6 border border-[#c2995a]/40">
@@ -181,7 +181,7 @@ const Signup = () => {
       </div>
 
       {/* 🌕 Bottom Glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#c89d5c33] to-transparent blur-2xl pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-linear-to-t from-[#c89d5c33] to-transparent blur-2xl pointer-events-none"></div>
     </div>
   );
 };

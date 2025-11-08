@@ -6,7 +6,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import chapterRoutes from "./routes/chapterRoutes.js";
 import shlokRoutes from "./routes/shlokRoutes.js";
-import progRoutes from "./routes/progRoutes.js";
+
 
 // ⚙️ Config
 dotenv.config();
@@ -21,7 +21,7 @@ import krishnaRoutes from "./routes/krishnaRoutes.js";
 app.use("/api/auth", authRoutes);         // Authentication (Signup / Login)
 app.use("/api/chapters", chapterRoutes);  // Chapters list / details
 app.use("/api/shlok", shlokRoutes);       // Shloka details per chapter
-app.use("/api/progress", progRoutes); 
+
 
 app.use("/api/krishna", krishnaRoutes);
     // User progress tracking

@@ -13,7 +13,7 @@ const About = () => {
       }}
     >
       {/* ✨ Deep Golden Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/90" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/70 to-black/90" />
 
       {/* 🧭 Navbar */}
       <div className="relative z-20">
@@ -21,7 +21,7 @@ const About = () => {
       </div>
 
       {/* 🪶 Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center flex-grow px-4 sm:px-6 lg:px-8 py-20">
+      <div className="relative z-10 flex flex-col items-center justify-center grow px-4 sm:px-6 lg:px-8 py-20">
         {/* Title */}
         <motion.h1
           className="sanskrit-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight text-center"
@@ -108,7 +108,7 @@ const About = () => {
       </div>
 
       {/* ✨ Bottom Glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-36 sm:h-40 bg-gradient-to-t from-[#c89d5c33] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-36 sm:h-40 bg-linear-to-t from-[#c89d5c33] to-transparent pointer-events-none" />
     </div>
   );
 };
